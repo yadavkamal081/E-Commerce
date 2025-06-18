@@ -109,7 +109,7 @@ The project follows a **layered architecture**:
 
 ---
 
-## Module Structure
+## File Structure
 
 ```
 auth-module/
