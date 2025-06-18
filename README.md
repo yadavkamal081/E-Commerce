@@ -1,222 +1,128 @@
-# E-Commerce
+# User Authentication and Profile Management Module
 
-This is a Java-based web application of an e-commerce website; customers can browse items, manage carts and orders, and update delivery information; admin can manage products/orders.
+## Module Overview
 
-## Technologies
+The **User Authentication and Profile Management Module** is a Spring Boot-based RESTful web service designed to handle user operations such as registration, authentication (login), profile management, and password functionality in an e-commerce system. It uses JWT (JSON Web Token) for stateless authentication and MySQL as the backend database.
 
-**Front-end**: React.js, HTML, CSS
+## Architecture
 
-**Back-end**: Java, SpringBoot, JPA(Hibernate), MySQL
+The project follows a **layered architecture**:
 
-## Features
+* **Controller Layer:** Handles HTTP requests and responses.
+* **Service Layer:** Contains business logic including JWT token management and validation.
+* **Repository Layer:** Manages database operations using Spring Data JPA.
+* **Model Layer:** Defines the data structure for User and Admin entities.
+* **Security Layer:** Configures Spring Security and JWT authentication filters.
 
-### Users
-- Sign up for a new user account.
-- Change user information (e.g., delivery address/email).
-- Search items by name and category; browse items and their detail page.
-- Add items to Cart; Submit Order by selecting items on Cart.
-- Manage orders: keep track of orders' details, including delivery status, and take action on orders.
+## Key Features
 
-### Admin
-- Register for a new user account.
-- Manage goods, including creating a new item, revising an existing item, or deleting an item.
-- Manage orders, including tracking order status and taking delivery actions.
+* **Spring Boot & Spring Security:** Fast development and secure endpoints.
+* **JWT Authentication:** Stateless, scalable user authentication.
+* **Spring Data JPA:** Simplifies CRUD operations with the MySQL database.
+* **RESTful API Endpoints:** Allows secure user login, registration, and profile updates.
 
-## Team Members
+---
 
-| Role                   | Name        |
-|------------------------|-------------|
-| Product Owner/Developer | Amritanshu  |
-| Scrum Master/Developer  | Achyuth     |
-| Developer               | Santhoshram |
-| Developer               | Kamal Yadav |
+## Database Tables
 
+### User Table
 
-# Sprint Plan
+| Column Name        | Data Type | Description                             |
+|--------------------|-----------|-----------------------------------------|
+| `userId`           | BIGINT    | Primary Key, auto-generated.            |
+| `name`             | VARCHAR   | Full name of the user.                  |
+| `email`            | VARCHAR   | User email (unique).                    |
+| `password`         | VARCHAR   | Encrypted password.                     |
+| `shippingAddress`  | VARCHAR   | Shipping address for the user.          |
+| `paymentDetails`   | VARCHAR   | Encrypted or masked payment information.|
 
-## Sprint 1: Project Setup and Initial Development
+### Admin Table
 
-- **Duration**: 1 week
-- **Goals**:
-  - Set up project repositories and environments.
-  - Initialize frontend and backend frameworks.
-  - Implement user registration and login functionality.
-    
-- **Key Tasks**:
-  - Set up React and Spring Boot projects.
-  - Configure database connections.
-  - Develop user authentication module.
-  - Create initial wireframes for user interface.
+| Column Name | Data Type | Description                  |
+|-------------|-----------|------------------------------|
+| `adminId`   | BIGINT    | Primary Key, auto-generated. |
+| `email`     | VARCHAR   | Admin email address.         |
+| `password`  | VARCHAR   | Encrypted password.          |
 
-## Sprint 2: Product Management Module
-
-- **Duration**: 1 week
-- **Goals**:
-  - Develop product management features.
-  - Implement CRUD operations for products.
-  - Create product listing and detail pages.
-    
-- **Key Tasks**:
-  - Design product entity and database schema.
-  - Develop product creation, update, and delete functionalities.
-  - Implement product listing and detail views in frontend.
-  - Validate and store product data in backend.
-
-## Sprint 3: Shopping Cart and Order Management Modules
-
-- **Duration**: 1 week
-- **Goals**:
-  - Implement shopping cart functionalities.
-  - Develop order processing and tracking features.
-  - Implement payment processing.
-    
-- **Key Tasks**:
-  - Design cart item and order entities and database schema.
-  - Develop add/remove item functionalities for the cart.
-  - Create shopping cart page in frontend.
-  - Develop order placement and tracking functionalities.
-  - Integrate payment gateway.
-  - Create order confirmation and tracking pages in frontend.
-
-## Sprint 4: Admin Dashboard Module
-
-- **Duration**: 1 week
-- **Goals**:
-  - Implement admin dashboard functionalities.
-  - Allow admins to manage products, orders, and users.
-    
-- **Key Tasks**:
-  - Design admin entity and database schema.
-  - Develop admin management features.
-  - Create admin dashboard interface.
-  - Generate sales analytics and reports.
-
-## Sprint 5: Testing, Deployment, and Final Review
-
-- **Duration**: 1 week
-- **Goals**:
-  - Perform comprehensive testing.
-  - Deploy the application locally.
-  - Finalize the application and launch the platform.
-    
-- **Key Tasks**:
-  - Conduct unit, integration, and end-to-end testing.
-  - Fix bugs and optimize performance.
-  - Deploy frontend and backend locally.
-  - Prepare deployment documentation.
-  - Review and finalize all features.
-  - Conduct final testing.
-  - Launch the application.
-  - Monitor and gather user feedback.
-
-## Entities
-
-### Admin Entity
-| Field       | Type    | Description                  |
-|-------------|---------|------------------------------|
-| AdminID     | string  | Unique admin identifier      |
-| Name        | string  | Admin name                   |
-| Role        | string  | Role (e.g., superadmin)      |
-| Permissions | array   | List of allowed actions      |
-
-### User Entity
-
-| Field           | Type    | Description                     |
-|-----------------|---------|---------------------------------|
-| UserID          | string  | Unique user identifier          |
-| Name            | string  | Full name                       |
-| Email           | string  | Email address                   |
-| Password        | string  | Hashed password                 |
-| ShippingAddress | string  | Default shipping address        |
-| PaymentDetails  | string  | Stored payment method info      |
-
-### Product Entity
-
-| Field       | Type    | Description              |
-|-------------|---------|--------------------------|
-| ProductID   | string  | Unique identifier        |
-| Name        | string  | Product name             |
-| Description | string  | Product description      |
-| Price       | number  | Product price            |
-| Category    | string  | Product category         |
-| ImageURL    | string  | URL to product image     |
-
-### Order Entity
-
-| Field           | Type    | Description                        |
-|-----------------|---------|------------------------------------|
-| OrderID         | string  | Unique order identifier            |
-| UserID          | string  | ID of the user placing the order   |
-| TotalPrice      | number  | Total order price                  |
-| ShippingAddress | string  | Delivery address                   |
-| OrderStatus     | string  | Status: pending/shipped/delivered |
-| PaymentStatus   | string  | Status: paid/unpaid/failed         |
-
-### CartItem Entity
-
-| Field       | Type    | Description              |
-|-------------|---------|--------------------------|
-| CartItemID  | string  | Unique identifier        |
-| ProductID   | string  | Linked product ID        |
-| Quantity    | number  | Quantity of the product  |
-| TotalPrice  | number  | Total price for the item |
+---
 
 ## API Endpoints
 
-### Product
-- **GET /products** – List all products
-- **GET /products/{id}** – Get product by ID
-- **POST /products** – Create a new product
-- **PUT /products/{id}** – Update a product
-- **DELETE /products/{id}** – Delete a product
-- **GET /products/category/{category}** – Get products by category
+**Base URL:** `http://localhost:8080/api/users`
 
-### CartItem
-- **GET /cart/{userId}** – Get cart items for a user
-- **POST /cart/{userId}** – Add item to cart
-- **PUT /cart/{userId}/{cartItemId}** – Update quantity
-- **DELETE /cart/{userId}/{cartItemId}** – Remove item from cart
-- **DELETE /cart/{userId}** – Clear cart
+### 1. Register a New User
 
-### Order
-- **POST /orders** – Place a new order
-- **GET /orders/{userId}** – Get all orders for a user
-- **GET /orders/details/{orderId}** – Get order details
-- **PUT /orders/status/{orderId}** – Update order status
-- **PUT /orders/payment/{orderId}** – Update payment status
+* **Endpoint:** `POST /api/users/register`
+* **Request Body:**
 
-### User
-- **POST /auth/register** – Register a new user
-- **POST /auth/login** – Login
-- **GET /users/{userId}** – Get user profile
-- **PUT /users/{userId}** – Update user profile
+    ```json
+    {
+      "name": "John Doe",
+      "email": "john@example.com",
+      "password": "password123"
+    }
+    ```
 
-### Admin
-- **GET /admin/products** – View/manage all products
-- **GET /admin/orders** – View all orders
-- **GET /admin/users** – View all users
-- **GET /admin/reports/sales** – Generate sales reports
-- **GET /admin/reports/analytics** – View analytics
+* **Response:** Success message or email already in use.
 
+---
 
-## Project Structure
+### 2. User Login
 
-## Backend
- 
+* **Endpoint:** `POST /api/users/login`
+* **Request Body:**
+
+    ```json
+    {
+      "email": "john@example.com",
+      "password": "password123"
+    }
+    ```
+
+* **Response:** JWT token if credentials are valid.
+
+---
+
+### 3. Update User Profile
+
+* **Endpoint:** `PUT /api/users/profile`
+* **Authorization:** Bearer Token (JWT)
+* **Request Body:**
+
+    ```json
+    {
+      "name": "John Updated",
+      "shippingAddress": "New Address",
+      "paymentDetails": "Updated Payment"
+    }
+    ```
+
+* **Response:** Updated user details.
+
+---
+
+### 4. Get Current User Profile
+
+* **Endpoint:** `GET /api/users/profile`
+* **Authorization:** Bearer Token (JWT)
+* **Response:** Returns user information.
+
+---
+
+## Module Structure
+
 ```
-backend/                      # Spring Boot backend
+auth-module/
 ├── src/
 │   ├── main/
-│   │   ├── java/com/ecommerce/
-│   │   │   ├── EcommerceApplication.java
-│   │   │   ├── config/         # App & security configs
-│   │   │   ├── controller/     # API endpoints
-│   │   │   ├── model/          # JPA entities
-│   │   │   ├── repository/     # Data access
-│   │   │   ├── service/        # Business logic
-│   │   │   └── dto/            # Request/response objects
-│   │   └── resources/
-│   │       └── application.properties
-├── test/                      # Unit tests
-└── pom.xml
+│   │   ├── java/com/example/auth/
+│   │   │   ├── controller/         # REST APIs
+│   │   │   ├── model/              # User, Admin entities
+│   │   │   ├── repository/         # UserRepository, AdminRepository
+│   │   │   ├── service/            # AuthService, UserService
+│   │   │   └── security/           # JWT Filters and Config
+│   └── resources/
+│       ├── application.properties  # DB & JWT configs
+├── pom.xml
+└── README.md
 ```
