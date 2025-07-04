@@ -16,24 +16,7 @@ The project follows a **layered architecture**:
 
 ---
 
-## User Authentication and Profile Management Module Architecture
 
-```mermaid
-graph TD
-    A[API Gateway] --> B(Controller Layer)
-    B -- Handles Requests --> C(Service Layer)
-    C -- Business Logic & JWT --> D(Repository Layer)
-    D -- Manages DB Ops --> E[MySQL Database]
-
-    subgraph Security Layer
-        F[JWT Authentication Filter] --> G[Spring Security Config]
-        G --> B
-    end
-
-    B -- Uses --> F
-    C -- Manages --> F
-
----
 
 ## Database Tables
 
