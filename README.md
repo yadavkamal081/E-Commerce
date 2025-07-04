@@ -14,12 +14,24 @@ The project follows a **layered architecture**:
 * **Model Layer:** Defines the data structure for User and Admin entities.
 * **Security Layer:** Configures Spring Security and JWT authentication filters.
 
-## Key Features
+---
 
-* **Spring Boot & Spring Security:** Fast development and secure endpoints.
-* **JWT Authentication:** Stateless, scalable user authentication.
-* **Spring Data JPA:** Simplifies CRUD operations with the MySQL database.
-* **RESTful API Endpoints:** Allows secure user login, registration, and profile updates.
+## User Authentication and Profile Management Module Architecture
+
+```mermaid
+graph TD
+    A[API Gateway] --> B(Controller Layer)
+    B -- Handles Requests --> C(Service Layer)
+    C -- Business Logic & JWT --> D(Repository Layer)
+    D -- Manages DB Ops --> E[MySQL Database]
+
+    subgraph Security Layer
+        F[JWT Authentication Filter] --> G[Spring Security Config]
+        G --> B
+    end
+
+    B -- Uses --> F
+    C -- Manages --> F
 
 ---
 
